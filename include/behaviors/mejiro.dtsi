@@ -1,0 +1,11 @@
+/*
+ * Convenience include for the Mejiro behavior node.
+ * Include this from your keymap:
+ *   #include <behaviors/mejiro.dtsi>
+ */
+&{/behaviors} {
+    mj: mejiro {
+        compatible = "zmk,behavior-mejiro";
+        label = "mj";
+    };
+};
