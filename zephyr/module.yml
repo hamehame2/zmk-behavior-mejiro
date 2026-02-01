@@ -1,0 +1,4 @@
+name: zmk-behavior-mejiro
+build:
+  cmake: .
+  kconfig: Kconfig

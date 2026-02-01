@@ -1,0 +1,10 @@
+description: Mejiro chorded IME behavior
+
+compatible: "zmk,behavior-mejiro"
+
+include: one_param.yaml
+
+properties:
+  label:
+    type: string
+    required: true
