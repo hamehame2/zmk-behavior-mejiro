@@ -3,7 +3,11 @@
  */
 #pragma once
 
-#include QMK_KEYBOARD_H
+/* ZMK module side: do NOT include QMK headers.
+ * We only need basic C types here.
+ */
+#include <stdbool.h>
+#include <stddef.h>
 
 // メジロ式変換結果
 typedef struct {
@@ -16,7 +20,7 @@ typedef struct {
 mejiro_result_t mejiro_transform(const char *mejiro_id);
 
 // ひらがなをヘボン式ローマ字に変換
-void kana_to_roma(const char *kana_input, char *roma_output, size_t output_size);
+void kana_to_roma(const char *kana, char *out, size_t out_len);
 
-// 「っ」の持ち越し状態をクリア（undo/backspace時に呼び出し）
+// 「っ」の保留状態をクリア
 void mejiro_clear_pending_tsu(void);
