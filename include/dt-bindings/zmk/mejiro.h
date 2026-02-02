@@ -9,29 +9,29 @@
  */
 
 /* left 0..11 */
-#define lS  0
-#define lT  1
-#define lK  2
-#define lN  3
-#define lY  4
-#define lI  5
-#define lA  6
-#define lU  7
-#define ln  8   /* n */
-#define lt  9
-#define lk 10
-#define lX 11   /* # */
+#define fS  0
+#define fT  1
+#define fK  2
+#define fN  3
+#define fY  4
+#define fI  5
+#define fA  6
+#define fU  7
+#define fn  8   /* n */
+#define ft  9
+#define fk 10
+#define fX 11   /* # */
 
 /* right 12..23 */
-#define rS 12
-#define rT 13
-#define rK 14
-#define rN 15
-#define rY 16
-#define rI 17
-#define rA 18
-#define rU 19
-#define rn 20   /* n */
-#define rt 21
-#define rk 22
-#define rX 23   /* * */
+#define jS 12
+#define jT 13
+#define jK 14
+#define jN 15
+#define jY 16
+#define jI 17
+#define jA 18
+#define jU 19
+#define jn 20   /* n */
+#define jt 21
+#define jk 22
+#define jX 23   /* * */
