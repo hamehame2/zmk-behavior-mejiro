@@ -1,0 +1,14 @@
+/*
+ * Mejiro behavior node definition.
+ *
+ * Include this from your keymap:
+ *   #include <behaviors/mejiro.dtsi>
+ */
+ / {
+    behaviors {
+        mejiro: mejiro {
+            compatible = "zmk,behavior-mejiro";
+            #binding-cells = <1>;
+        };
+    };
+};

@@ -1,10 +1,11 @@
-description: Mejiro chorded IME behavior
+# SPDX-License-Identifier: MIT
+description: Mejiro chorded input behavior
 
 compatible: "zmk,behavior-mejiro"
 
-include: one_param.yaml
+include: [behavior.yaml]
 
 properties:
-  label:
-    type: string
-    required: true
+  "#binding-cells":
+    type: int
+    const: 1
