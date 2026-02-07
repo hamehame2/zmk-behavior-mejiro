@@ -1,1 +1,17 @@
-rsource "Kconfig.mejiro"
+# SPDX-License-Identifier: MIT
+
+menuconfig ZMK_BEHAVIOR_MEJIRO
+    bool "Enable Mejiro behavior (mg)"
+    default y
+    help
+      Enables the Mejiro behavior driver.
+
+if ZMK_BEHAVIOR_MEJIRO
+
+config ZMK_BEHAVIOR_MEJIRO_LOG_LEVEL
+    int "Mejiro behavior log level"
+    default 0
+    help
+      0=off.
+
+endif # ZMK_BEHAVIOR_MEJIRO

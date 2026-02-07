@@ -1,0 +1,17 @@
+/*
+ * SPDX-License-Identifier: MIT
+ *
+ * Drop-in devicetree include for a zero-parameter behavior node labeled `mg`.
+ * Your keymap can do:  #include <behaviors/mejiro.dtsi>
+ * And then use:        &mg
+ */
+
+ / {
+   behaviors {
+     mg: mg {
+       compatible = "zmk,behavior-mejiro";
+       #binding-cells = <0>;
+       label = "MG";
+     };
+   };
+ };

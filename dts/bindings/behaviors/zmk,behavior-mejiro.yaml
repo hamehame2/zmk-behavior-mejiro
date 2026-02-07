@@ -1,11 +1,10 @@
 # SPDX-License-Identifier: MIT
-description: Mejiro chorded input behavior
-
+description: Mejiro behavior (stub / placeholder)
 compatible: "zmk,behavior-mejiro"
-
-include: [behavior.yaml]
 
 properties:
   "#binding-cells":
-    type: int
-    const: 1
+    const: 0
+  label:
+    type: string
+    required: false

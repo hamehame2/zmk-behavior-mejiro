@@ -2,4 +2,5 @@ name: zmk-behavior-mejiro
 build:
   cmake: .
   kconfig: Kconfig
-  dts_root: dts
+  settings:
+    dts_root: .
