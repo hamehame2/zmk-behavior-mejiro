@@ -27,22 +27,22 @@
 #ifndef MEJIRO_ABBR_STUBS
 #define MEJIRO_ABBR_STUBS 1
 typedef struct {
-    bool matched;
+    bool success;/* matched */
     const char *out; /* UTF-8 romaji or kana, depending on later pipeline */
 } abbreviation_result_t;
 
 static inline abbreviation_result_t mejiro_user_abbreviation(const char *stroke) {
     (void)stroke;
-    return (abbreviation_result_t){ .matched = false, .out = NULL };
+    return (abbreviation_result_t){ .success = false, .out = NULL };
 }
 static inline abbreviation_result_t mejiro_command_abbreviation(const char *stroke) {
     (void)stroke;
-    return (abbreviation_result_t){ .matched = false, .out = NULL };
+    return (abbreviation_result_t){ .success = false, .out = NULL };
 }
-static inline abbreviation_result_t mejiro_abstract_abbreviation(const char *stroke) { abbreviation_result_t r = {0}; r.matched = false; r.out = NULL; return r; }
+static inline abbreviation_result_t mejiro_abstract_abbreviation(const char *stroke) { abbreviation_result_t r = {0}; r.success = false; r.out = NULL; return r; }
 static inline abbreviation_result_t mejiro_verb_transform(const char *stroke) {
     (void)stroke;
-    return (abbreviation_result_t){ .matched = false, .out = NULL };
+    return (abbreviation_result_t){ .success = false, .out = NULL };
 }
 #endif
 LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
