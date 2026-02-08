@@ -1,8 +1,0 @@
-# Copyright (c) 2020 The ZMK Contributors
-# SPDX-License-Identifier: MIT
-
-description: Naginata-shiki behavior
-
-compatible: "zmk,behavior-naginata"
-
-include: one_param.yaml
