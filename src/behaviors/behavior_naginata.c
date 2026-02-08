@@ -18,6 +18,32 @@
 #include <zmk_naginata/nglistarray.h>
 #include <zmk_naginata/naginata_func.h>
 
+/* --------------------------------------------------------------------------
+ * Mejiro abbreviations/verbs are NOT wired yet in this step.
+ * Some previous experimental code referenced QMK-style abbreviation_result_t.
+ * To keep this step "naginata core + mejiro output only" and avoid build breakage,
+ * we provide minimal stubs here. Next step will port real logic in separate files.
+ * -------------------------------------------------------------------------- */
+#ifndef MEJIRO_ABBR_STUBS
+#define MEJIRO_ABBR_STUBS 1
+typedef struct {
+    bool matched;
+    const char *out; /* UTF-8 romaji or kana, depending on later pipeline */
+} abbreviation_result_t;
+
+static inline abbreviation_result_t mejiro_user_abbreviation(const char *stroke) {
+    (void)stroke;
+    return (abbreviation_result_t){ .matched = false, .out = NULL };
+}
+static inline abbreviation_result_t mejiro_command_abbreviation(const char *stroke) {
+    (void)stroke;
+    return (abbreviation_result_t){ .matched = false, .out = NULL };
+}
+static inline abbreviation_result_t mejiro_verb_transform(const char *stroke) {
+    (void)stroke;
+    return (abbreviation_result_t){ .matched = false, .out = NULL };
+}
+#endif
 LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 extern int64_t timestamp;
 
