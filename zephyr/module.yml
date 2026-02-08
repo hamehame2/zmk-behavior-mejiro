@@ -1,0 +1,6 @@
+name: zmk-naginata
+build:
+  cmake: .
+  kconfig: Kconfig
+  settings:
+    dts_root: .
