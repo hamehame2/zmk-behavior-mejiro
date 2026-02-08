@@ -69,6 +69,7 @@ extern int64_t timestamp;
 static NGListArray nginput;
 static uint32_t pressed_keys = 0UL; // 押しているキーのビットをたてる
 static int8_t n_pressed_keys = 0;   // 押しているキーの数
+static uint32_t chord_keys = 0UL;  // current chord (union of pressed keys for this stroke)
 
 #define NG_WINDOWS 0
 #define NG_MACOS 1
@@ -82,6 +83,89 @@ typedef union {
 } user_config_t;
 
 extern user_config_t naginata_config;
+
+// -----------------------------------------------------------------------------
+// Mejiro "movement" (finalize-on-release) + debug output
+//  - Keep Naginata module integration (&ng, dtsi/binding) untouched.
+//  - Change ONLY the finalize timing and the output generation path.
+//  - We build a Mejiro-like stroke string using the user's ng<->mejiro mapping,
+//    but we output letters only for now (no '-' '#' '*' symbols) to avoid
+//    keycode/shift issues during verification.
+//    * hash '#'  -> 'Q' prefix (since Q key is mapped to '#')
+//    * hyphen '-' -> 'X' separator between left and right (visual only)
+//    * asterisk '*' -> 'P' suffix (since P key is mapped to '*')
+// -----------------------------------------------------------------------------
+
+static inline void tap_key(uint32_t keycode) {
+    raise_zmk_keycode_state_changed_from_encoded(keycode, true, timestamp);
+    raise_zmk_keycode_state_changed_from_encoded(keycode, false, timestamp);
+}
+
+static void tap_ascii_letter(char c) {
+    if (c >= 'a' && c <= 'z') c = (char)(c - 'a' + 'A');
+    if (c < 'A' || c > 'Z') return;
+    tap_key((uint32_t)c);
+}
+
+static void send_stroke_debug_letters(const char *s) {
+    for (const char *p = s; *p; p++) {
+        tap_ascii_letter(*p);
+    }
+}
+
+// Build "Mejiro stroke" (letters-only) from ng chord bits.
+// Output format (letters only):
+//   [Q?] <Lconso STKN> <Lvowel YIAU> <Lparticle ntk> X <Rconso STKN> <Rvowel YIAU> <Rparticle ntk> [P?]
+static void build_mejiro_stroke_letters(uint32_t chord, char *out, size_t out_sz) {
+    size_t n = 0;
+    #define APP(ch) do { if (n + 1 < out_sz) out[n++] = (ch); } while (0)
+
+    // '#' prefix (ng Q = left '#')
+    if (chord & B_Q) APP('Q');
+
+    // --- Left consonants: S T K N (ng A W S D)
+    if (chord & B_A) APP('S');   // A左S
+    if (chord & B_W) APP('T');   // W左T
+    if (chord & B_S) APP('K');   // S左K
+    if (chord & B_D) APP('N');   // D左N
+
+    // --- Left vowels: Y I A U
+    if (chord & B_E) APP('Y');   // E左Y
+    if (chord & B_R) APP('I');   // R左I
+    if (chord & (B_T | B_G)) APP('U'); // T左U, G左U (either)
+    if (chord & B_F) APP('A');   // F左A
+
+    // --- Left particles: n t k (ng C V B)
+    if (chord & B_C) APP('n');   // C左n
+    if (chord & B_V) APP('t');   // V左t
+    if (chord & B_B) APP('k');   // B左k
+
+    // visual separator between hands (hyphen in Mejiro notation)
+    APP('X');
+
+    // --- Right consonants: S T K N (ng SEMI O L K)
+    if (chord & B_SEMI) APP('S'); // SEMI右S
+    if (chord & B_O) APP('T');    // O右T
+    if (chord & B_L) APP('K');    // L右K
+    if (chord & B_K) APP('N');    // K右N
+
+    // --- Right vowels: Y I A U
+    if (chord & B_I) APP('Y');    // I右Y
+    if (chord & (B_U)) APP('I');  // U右I
+    if (chord & (B_H | B_Y)) APP('U'); // H右U, Y右U (either)
+    if (chord & (B_J)) APP('A');  // J右A
+
+    // --- Right particles: k t n (ng N M COMMA), but output order is n t k
+    if (chord & B_COMMA) APP('n'); // COMMA右n
+    if (chord & B_M) APP('t');     // M右t
+    if (chord & B_N) APP('k');     // N右k
+
+    // '*' suffix (ng P = right '*')
+    if (chord & B_P) APP('P');
+
+    if (out_sz > 0) out[n < out_sz ? n : out_sz - 1] = '\0';
+    #undef APP
+}
 
 static const uint32_t ng_key[] = {
     [A - A] = B_A,     [B - A] = B_B,         [C - A] = B_C,         [D - A] = B_D,
@@ -699,6 +783,7 @@ bool naginata_press(struct zmk_behavior_binding *binding, struct zmk_behavior_bi
     case SQT:        
         n_pressed_keys++;
         pressed_keys |= ng_key[keycode - A]; // キーの重ね合わせ
+        chord_keys |= ng_key[keycode - A];   // chord union for this stroke
 
         if (keycode == SPACE || keycode == ENTER) {
             NGList a;
@@ -762,11 +847,11 @@ bool naginata_press(struct zmk_behavior_binding *binding, struct zmk_behavior_bi
                 break;
             }
         }
-
-        if (nginput.size > 1 || number_of_candidates(&(nginput.elements[0])) == 1) {
-            ng_type(&(nginput.elements[0]));
-            removeFromListArrayAt(&nginput, 0);
-        }
+        // NOTE: Mejiro finalize-on-release: do NOT commit on press.
+        // if (nginput.size > 1 || number_of_candidates(&(nginput.elements[0])) == 1) {
+        //     ng_type(&(nginput.elements[0]));
+        //     removeFromListArrayAt(&nginput, 0);
+        // }
         break;
     }
 
@@ -797,18 +882,31 @@ bool naginata_release(struct zmk_behavior_binding *binding,
 
         pressed_keys &= ~ng_key[keycode - A]; // キーの重ね合わせ
 
-        if (pressed_keys == 0UL) {
-            while (nginput.size > 0) {
-                ng_type(&(nginput.elements[0]));
-                removeFromListArrayAt(&nginput, 0);
-            }
-        } else {
-            if (nginput.size > 0 && number_of_candidates(&(nginput.elements[0])) == 1) {
-                ng_type(&(nginput.elements[0]));
-                removeFromListArrayAt(&nginput, 0);
-            }
-        }
-        break;
+        
+if (pressed_keys == 0UL) {
+    // Mejiro finalize-on-release: build stroke from the full chord and send debug letters.
+    char stroke[64];
+    build_mejiro_stroke_letters(chord_keys, stroke, sizeof(stroke));
+
+    // Output the stroke letters (letters-only) so we can verify mapping + timing.
+    // Example: QST...X...P
+    send_stroke_debug_letters(stroke);
+
+    // Clear buffered chord for next stroke.
+    chord_keys = 0UL;
+
+    // Clear pending Naginata candidate buffer (we keep its construction intact for now,
+    // but we do not use it for output in this Mejiro-movement mode).
+    while (nginput.size > 0) {
+        removeFromListArrayAt(&nginput, 0);
+    }
+} else {
+    // NOTE: Mejiro finalize-on-release: do NOT commit while still holding keys.
+    // if (nginput.size > 0 && number_of_candidates(&(nginput.elements[0])) == 1) {
+    //     ng_type(&(nginput.elements[0]));
+    //     removeFromListArrayAt(&nginput, 0);
+    // }
+}break;
     }
 
     LOG_DBG("<NAGINATA RELEASE");
@@ -823,6 +921,7 @@ static int behavior_naginata_init(const struct device *dev) {
 
     initializeListArray(&nginput);
     pressed_keys = 0UL;
+    chord_keys = 0UL;
     n_pressed_keys = 0;
     naginata_config.os =  NG_MACOS;
 
