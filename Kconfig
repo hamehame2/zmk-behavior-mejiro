@@ -1,0 +1,3 @@
+config NAGINATA
+    bool "Enable Naginata"
+    default y
