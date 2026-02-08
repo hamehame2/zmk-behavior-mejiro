@@ -39,6 +39,7 @@ static inline abbreviation_result_t mejiro_command_abbreviation(const char *stro
     (void)stroke;
     return (abbreviation_result_t){ .matched = false, .out = NULL };
 }
+static inline abbreviation_result_t mejiro_abstract_abbreviation(const char *stroke) { abbreviation_result_t r = {0}; r.matched = false; r.out = NULL; return r; }
 static inline abbreviation_result_t mejiro_verb_transform(const char *stroke) {
     (void)stroke;
     return (abbreviation_result_t){ .matched = false, .out = NULL };
@@ -1024,8 +1025,6 @@ typedef struct {
 } mejiro_result_t_zmk;
 
 // Stubs: (next step we can wire real tables)
-static const char *mejiro_abstract_abbreviation(const char *mejiro_id) { (void)mejiro_id; return NULL; }
-static const char *mejiro_user_abbreviation(const char *mejiro_id) { (void)mejiro_id; return NULL; }
 static const char *mejiro_verb_conjugate(const char *mejiro_id) { (void)mejiro_id; return NULL; }
 
 static void kana_to_roma_zmk(const char *kana_input, char *roma_output, size_t output_size);
