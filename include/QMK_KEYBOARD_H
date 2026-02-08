@@ -1,8 +1,0 @@
-/* Minimal shim so QMK-origin files compile under ZMK/Zephyr.
- * Only types/macros required by the imported mejiro_*.c are provided.
- */
-#pragma once
-
-#include <stdbool.h>
-#include <stddef.h>
-#include <stdint.h>
