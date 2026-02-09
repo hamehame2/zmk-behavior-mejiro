@@ -1068,6 +1068,23 @@ static void mejiro_clear_pending_tsu_zmk(void);
 #include <stdarg.h>
 #include <stddef.h>
 
+/* --------------------------------------------------------------------------
+ * Compatibility helpers for "single-file" builds.
+ *  - Some upstream variants expose `mejiro_commands` but not an explicit count.
+ *  - Provide a safe macro alias when possible.
+ * -------------------------------------------------------------------------- */
+#ifndef ARRAY_SIZE
+#define ARRAY_SIZE(a) (sizeof(a) / sizeof((a)[0]))
+#endif
+
+/* If no count symbol is provided, derive it from the command table (when it is
+ * a real array in this translation unit).
+ */
+#ifndef mejiro_command_count
+#define mejiro_command_count (ARRAY_SIZE(mejiro_commands))
+#endif
+
+
 // 前回の母音を保存（省略時に使用）
 static char last_vowel_stroke[8] = "A";  // デフォルトは"A"
 
