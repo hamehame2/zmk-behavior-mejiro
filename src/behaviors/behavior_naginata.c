@@ -44,15 +44,18 @@ static inline abbreviation_result_t mejiro_verb_transform(const char *stroke) {
     (void)stroke;
     return (abbreviation_result_t){ .success = false, .out = NULL };
 }
-// Verb conjugation stub (used by mejiro_transform_zmk later)
-typedef struct {
-    bool success;
-    const char *out;
-} verb_result_t;
-
-static inline verb_result_t mejiro_verb_conjugate(const char *first, ...) {
-    (void)first;
-    return (verb_result_t){ .success = false, .out = NULL };
+// Verb conjugation stub (temporary): provide the symbols used by this file.
+// If you later add a real conjugation engine, remove this stub and include the real header instead.
+static inline verb_result_t mejiro_verb_conjugate(const char *l_conso, const char *l_vowel,
+                                                 const char *particle, const char *r_conso,
+                                                 const char *r_vowel, const char *verb,
+                                                 const char *verb_tail, bool polite) {
+    (void)l_conso; (void)l_vowel; (void)particle; (void)r_conso; (void)r_vowel;
+    (void)verb; (void)verb_tail; (void)polite;
+    verb_result_t r = {0};
+    r.success = false;
+    r.out[0] = '';
+    return r;
 }
 
 #endif
@@ -1036,10 +1039,6 @@ typedef struct {
 } mejiro_result_t_zmk;
 
 
-typedef struct {
-    bool success;
-    char out[128];
-} verb_result_t;
 
 /* 
  * Temporary stub: accept any argument list used by the Mejiro port.
