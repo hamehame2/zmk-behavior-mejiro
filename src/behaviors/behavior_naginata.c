@@ -32,27 +32,27 @@
 #define MEJIRO_ABBR_STUBS 1
 typedef struct {
     bool success;/* matched */
-    const char *out; /* UTF-8 romaji or kana, depending on later pipeline */
+    const char *output; /* UTF-8 romaji or kana, depending on later pipeline */
 } abbreviation_result_t;
 
 static inline abbreviation_result_t mejiro_user_abbreviation(const char *stroke) {
     (void)stroke;
-    return (abbreviation_result_t){ .success = false, .out = NULL };
+    return (abbreviation_result_t){ .success = false, .output = NULL };
 }
 static inline abbreviation_result_t mejiro_command_abbreviation(const char *stroke) {
     (void)stroke;
-    return (abbreviation_result_t){ .success = false, .out = NULL };
+    return (abbreviation_result_t){ .success = false, .output = NULL };
 }
 static inline abbreviation_result_t mejiro_abstract_abbreviation(const char *stroke) { abbreviation_result_t r = {0}; r.success = false; r.output = NULL; return r; }
 static inline abbreviation_result_t mejiro_verb_transform(const char *stroke) {
     (void)stroke;
-    return (abbreviation_result_t){ .success = false, .out = NULL };
+    return (abbreviation_result_t){ .success = false, .output = NULL };
 }
 // Verb conjugation stub (temporary): provide the symbols used by this file.
 // If you later add a real conjugation engine, remove this stub and include the real header instead.
 typedef struct {
     bool success;
-    char out[64];
+    char output[64];
 } verb_result_t;
 
 static inline verb_result_t mejiro_verb_conjugate(const char *l_conso, const char *l_vowel,
@@ -1765,7 +1765,7 @@ mejiro_result_t_zmk mejiro_transform_zmk(const char *mejiro_id) {
         if (verb_result.success) {
             // 動詞活用結果をローマ字に変換して返す
             char kana_output[128];
-            strcpy(kana_output, verb_result.out);
+            strcpy(kana_output, verb_result.output);
             result.kana_length = utf8_char_count(kana_output);
             kana_to_roma_zmk(kana_output, result.output, sizeof(result.output));
             result.success = true;
