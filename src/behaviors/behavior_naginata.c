@@ -1247,7 +1247,7 @@ static const mj_cmd_t mejiro_commands_zmk[] = {
 };
 
 static bool handle_mejiro_command(const char *stroke) {
-    if (!stroke || stroke[0] == '') {
+    if (!stroke || stroke[0] == '\0') {
         return false;
     }
 
