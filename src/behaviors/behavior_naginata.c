@@ -431,7 +431,9 @@ typedef enum {
 } verb_type_t;
 
 typedef struct {
-    const char *dictionary_form;
+    const char *stroke;   // "A-STU" など
+    const char *stem;     // "ある" など
+    char gyou;            // 'k','g','s','t','n','b','m','r','w' 等
     verb_type_t verb_type;
 } verb_entry_t;
 
