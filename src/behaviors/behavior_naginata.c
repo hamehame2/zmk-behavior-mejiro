@@ -10,6 +10,10 @@
 #include <drivers/behavior.h>
 #include <zephyr/logging/log.h>
 
+/* C standard types (Zephyr headers often include these indirectly, but keep it explicit) */
+#include <stdbool.h>
+#include <stddef.h>
+
 #include <zmk/event_manager.h>
 #include <zmk/events/keycode_state_changed.h>
 #include <zmk/behavior.h>
@@ -46,6 +50,11 @@ static inline abbreviation_result_t mejiro_verb_transform(const char *stroke) {
 }
 // Verb conjugation stub (temporary): provide the symbols used by this file.
 // If you later add a real conjugation engine, remove this stub and include the real header instead.
+typedef struct {
+    bool success;
+    char out[64];
+} verb_result_t;
+
 static inline verb_result_t mejiro_verb_conjugate(const char *l_conso, const char *l_vowel,
                                                  const char *particle, const char *r_conso,
                                                  const char *r_vowel, const char *verb,
@@ -54,7 +63,7 @@ static inline verb_result_t mejiro_verb_conjugate(const char *l_conso, const cha
     (void)verb; (void)verb_tail; (void)polite;
     verb_result_t r = {0};
     r.success = false;
-    r.out[0] = '';
+    r.out[0] = '\0';
     return r;
 }
 
