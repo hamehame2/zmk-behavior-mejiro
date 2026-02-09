@@ -1214,7 +1214,7 @@ static const mj_cmd_t mejiro_commands_zmk[] = {
 
     /* Enter / Backspace / Delete / Tab / Esc */
     { "#FPLT",  MJ_CMD_KEY, MJ_KC(HID_USAGE_KEY_KEYBOARD_RETURN_ENTER), 0 },
-    { "#P",     MJ_CMD_KEY, MJ_KC(HID_USAGE_KEY_KEYBOARD_DELETEBACKSPACE),  0 },
+    { "#P",     MJ_CMD_KEY, MJ_KC(HID_USAGE_KEY_KEYBOARD_DELETE_BACKSPACE),  0 },
     { "#FR",    MJ_CMD_KEY, MJ_KC(HID_USAGE_KEY_KEYBOARD_DELETEFORWARD),   0 },
     { "#FT",    MJ_CMD_KEY, MJ_KC(HID_USAGE_KEY_KEYBOARD_TAB),   0 },
     { "#RS",    MJ_CMD_KEY, MJ_KC(HID_USAGE_KEY_KEYBOARD_ESCAPE),   0 },
@@ -1269,7 +1269,7 @@ static bool handle_mejiro_command(const char *stroke) {
         case MJ_CMD_UNDO: {
             uint16_t n = mejiro_history_pop();
             for (uint16_t k = 0; k < n; k++) {
-                tap_key(ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYBOARD_DELETEBACKSPACE));
+                tap_key(ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYBOARD_DELETE_BACKSPACE));
             }
             return true;
         }
