@@ -1081,7 +1081,7 @@ static void mejiro_clear_pending_tsu_zmk(void);
  * a real array in this translation unit).
  */
 #ifndef mejiro_command_count
-#define mejiro_command_count (ARRAY_SIZE(mejiro_commands))
+#define mejiro_command_count 0
 #endif
 
 
@@ -1877,29 +1877,10 @@ mejiro_result_t_zmk mejiro_transform_zmk(const char *mejiro_id) {
         // ただし、左の追加音が「ntk」で右の助詞が「n」の場合（追加音が「ー」+「ん」）は例外
         if (is_left_plus_particle) {
 
-            // コマンドテーブルから助詞文字列を検索
-            char particle_pattern[32];
-            strcpy(particle_pattern, l_particle_str);
-            strcat(particle_pattern, "-");
-            strcat(particle_pattern, r_particle_str);
-
-            bool found_in_commands = false;
-            for (uint8_t i = 0; i < mejiro_command_count; i++) {
-                if (strcmp(particle_pattern, mejiro_commands[i].pattern) == 0) {
-                    if (mejiro_commands[i].type == CMD_STRING) {
-                        strcat(result.output, mejiro_commands[i].action.string);
-                        found_in_commands = true;
-                        break;
-                    }
-                }
-            }
-
-            // コマンドテーブルになければ、transform_joshiで助詞を生成
-            if (!found_in_commands) {
-                char joshi_output[64] = {0};
-                transform_joshi(l_particle_str, r_particle_str, joshi_output);
-                strcat(result.output, joshi_output);
-            }
+            // コマンドテーブルは単体ビルドでは無効化: transform_joshi で助詞を生成
+            char joshi_output[64] = {0};
+            transform_joshi(l_particle_str, r_particle_str, joshi_output);
+            strcat(result.output, joshi_output);
         }
         // 左のかながなくても、左の追加音キーがあってかつ右のかながある場合
         // 左の追加音を先に出力
