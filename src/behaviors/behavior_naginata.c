@@ -1204,11 +1204,11 @@ static const mj_cmd_t mejiro_commands_zmk[] = {
     {"-U",  MJ_CMD_UNDO,   0, 0},
 
     /* QMK parity: keycode commands that include '#' */
-    {"Sk#-",  MJ_CMD_MOD_KEY, ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_Z), MOD_LCTL},
-    {"Kk#-",  MJ_CMD_MOD_KEY, ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_X), MOD_LCTL},
-    {"Nk#-",  MJ_CMD_MOD_KEY, ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_C), MOD_LCTL},
-    {"Ak#-",  MJ_CMD_MOD_KEY, ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_V), MOD_LCTL},
-    {"Ank#-", MJ_CMD_MOD_KEY, ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_V), MOD_LCTL}, /* TODO: add Shift modifier too */
+    {"Sk#-",  MJ_CMD_MOD_KEY, ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYBOARD_Z), MOD_LCTL},
+    {"Kk#-",  MJ_CMD_MOD_KEY, ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYBOARD_X), MOD_LCTL},
+    {"Nk#-",  MJ_CMD_MOD_KEY, ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYBOARD_C), MOD_LCTL},
+    {"Ak#-",  MJ_CMD_MOD_KEY, ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYBOARD_V), MOD_LCTL},
+    {"Ank#-", MJ_CMD_MOD_KEY, ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYBOARD_V), MOD_LCTL}, /* TODO: add Shift modifier too */
     /* Space */
     { "#*FLPT", MJ_CMD_KEY, MJ_KC(HID_USAGE_KEY_KEYBOARD_SPACEBAR), 0 },
 
@@ -1269,7 +1269,7 @@ static bool handle_mejiro_command(const char *stroke) {
         case MJ_CMD_UNDO: {
             uint16_t n = mejiro_history_pop();
             for (uint16_t k = 0; k < n; k++) {
-                tap_key(ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_BACKSPACE));
+                tap_key(ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYBOARD_DELETEBACKSPACE));
             }
             return true;
         }
