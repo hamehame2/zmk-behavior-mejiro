@@ -418,6 +418,24 @@ static const char *aru_conjugate[10] = {
 };
 
 // 主要な動詞辞書 (Plover_Mejiroより統合)
+
+// ------------------------------------------------------------
+// Verb dictionary types (ported from QMK mejiro_verb.h)
+// ------------------------------------------------------------
+typedef enum {
+    VERB_TYPE_GODAN,
+    VERB_TYPE_ICHIDAN,
+    VERB_TYPE_SAHEN,
+    VERB_TYPE_KAHEN,
+    VERB_TYPE_SPECIAL,
+} verb_type_t;
+
+typedef struct {
+    const char *dictionary_form;
+    verb_type_t verb_type;
+} verb_entry_t;
+
+
 static const verb_entry_t verb_dict[] = {
     // 五段活用 (k行)
     {"A-STU", "ある", 'k', VERB_TYPE_GODAN},       // 歩く
