@@ -50,10 +50,8 @@ typedef struct {
     const char *out;
 } verb_result_t;
 
-static inline verb_result_t mejiro_verb_conjugate(const char *kana, size_t kana_len, const void *ctx) {
-    (void)kana;
-    (void)kana_len;
-    (void)ctx;
+static inline verb_result_t mejiro_verb_conjugate(const char *first, ...) {
+    (void)first;
     return (verb_result_t){ .success = false, .out = NULL };
 }
 
@@ -1037,6 +1035,17 @@ typedef struct {
     bool success;
 } mejiro_result_t_zmk;
 
+
+typedef struct {
+    bool success;
+    char out[128];
+} verb_result_t;
+
+/* 
+ * Temporary stub: accept any argument list used by the Mejiro port.
+ * Returns success=false so the caller falls back to the non-verb path.
+ */
+
 // Stubs: (next step we can wire real tables)
 
 static void kana_to_roma_zmk(const char *kana_input, char *roma_output, size_t output_size);
@@ -1048,6 +1057,7 @@ static void mejiro_clear_pending_tsu_zmk(void);
  */
 #include <string.h>
 #include <stdbool.h>
+#include <stdarg.h>
 #include <stddef.h>
 
 // 前回の母音を保存（省略時に使用）
