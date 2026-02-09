@@ -1133,11 +1133,11 @@ static inline void tap_key(uint32_t keycode) {
 
 
 static inline void press_key(uint32_t keycode) {
-    (void)raise_zmk_keycode_state_changed_from_encoded(keycode, true);
+    (void)raise_zmk_keycode_state_changed_from_encoded(keycode, true, timestamp);
 }
 
 static inline void release_key(uint32_t keycode) {
-    (void)raise_zmk_keycode_state_changed_from_encoded(keycode, false);
+    (void)raise_zmk_keycode_state_changed_from_encoded(keycode, false, timestamp);
 }
 
 static inline void mod_tap(uint32_t mod_keycode, uint32_t keycode) {
