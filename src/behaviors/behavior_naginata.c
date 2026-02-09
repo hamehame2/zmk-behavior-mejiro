@@ -1038,7 +1038,6 @@ typedef struct {
 } mejiro_result_t_zmk;
 
 // Stubs: (next step we can wire real tables)
-static const char *mejiro_verb_conjugate(const char *mejiro_id) { (void)mejiro_id; return NULL; }
 
 static void kana_to_roma_zmk(const char *kana_input, char *roma_output, size_t output_size);
 static mejiro_result_t_zmk mejiro_transform_zmk(const char *mejiro_id);
