@@ -44,6 +44,19 @@ static inline abbreviation_result_t mejiro_verb_transform(const char *stroke) {
     (void)stroke;
     return (abbreviation_result_t){ .success = false, .out = NULL };
 }
+// Verb conjugation stub (used by mejiro_transform_zmk later)
+typedef struct {
+    bool success;
+    const char *out;
+} verb_result_t;
+
+static inline verb_result_t mejiro_verb_conjugate(const char *kana, size_t kana_len, const void *ctx) {
+    (void)kana;
+    (void)kana_len;
+    (void)ctx;
+    return (verb_result_t){ .success = false, .out = NULL };
+}
+
 #endif
 LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 extern int64_t timestamp;
