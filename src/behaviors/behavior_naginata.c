@@ -1236,7 +1236,7 @@ static void send_mejiro_roma(const char *output);
  *  - When MEJIRO_SAFE_MODE=1, the stroke string is saved to g_mejiro_last_output, but no transform/output is executed.
  * ========================= */
 #ifndef MEJIRO_SAFE_MODE
-#define MEJIRO_SAFE_MODE 4
+#define MEJIRO_SAFE_MODE 0
 #endif
 
 #ifndef MEJIRO_MAX_ID_LEN
