@@ -431,6 +431,20 @@ typedef enum {
     VERB_TYPE_SPECIAL
 } verb_type_t;
 
+// Conjugation forms (ported from QMK mejiro_verb.h)
+typedef enum {
+    CONJ_JISHO,   // 辞書形
+    CONJ_NAI,     // ない形
+    CONJ_TE_TA,   // て/た形
+    CONJ_MASU,    // ます形
+    CONJ_KANOU,   // 可能
+    CONJ_KATEI,   // 仮定
+    CONJ_IKOU,    // 意向
+    CONJ_MEIREI,  // 命令
+    CONJ_SHIEKI,  // 使役
+    CONJ_UKEMI,   // 受身
+} conj_form_t;
+
 typedef struct {
     const char *stroke;
     const char *stem;
@@ -654,7 +668,7 @@ static const char *get_particle_extra(const char *particle) {
 // 補助動詞・助動詞マップ
 typedef struct {
     const char *pattern;  // left_particle-right_particle
-    int conj_form;        // 活用形
+    conj_form_t conj_form;        // 活用形
     const char *suffix;   // 接尾辞
 } auxiliary_map_t;
 
@@ -681,7 +695,7 @@ static const auxiliary_map_t auxiliary_exception[] = {
 // 左側補助動詞マップ: [活用形, 補助動詞の語幹, 活用段, 活用行]
 typedef struct {
     const char *particle;
-    int conj_form;
+    conj_form_t conj_form;
     const char *stem;
     int verb_type;  // 1=五段, 2=上一段, 3=下一段
     char gyou;
@@ -699,7 +713,7 @@ static const left_auxiliary_info_t left_auxiliary[] = {
 // 右側助動詞マップ
 typedef struct {
     const char *particle;
-    int conj_form;
+    conj_form_t conj_form;
     const char *suffix;
 } right_auxiliary_t;
 
