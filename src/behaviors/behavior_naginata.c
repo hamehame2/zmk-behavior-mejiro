@@ -1213,7 +1213,7 @@ static const mj_cmd_t mejiro_commands_zmk[] = {
     { "#*FLPT", MJ_CMD_KEY, MJ_KC(HID_USAGE_KEY_KEYBOARD_SPACEBAR), 0 },
 
     /* Enter / Backspace / Delete / Tab / Esc */
-    { "#FPLT",  MJ_CMD_KEY, MJ_KC(HID_USAGE_KEY_KEYBOARD_RETURNENTER), 0 },
+    { "#FPLT",  MJ_CMD_KEY, MJ_KC(HID_USAGE_KEY_KEYBOARD_RETURN_ENTER), 0 },
     { "#P",     MJ_CMD_KEY, MJ_KC(HID_USAGE_KEY_KEYBOARD_DELETEBACKSPACE),  0 },
     { "#FR",    MJ_CMD_KEY, MJ_KC(HID_USAGE_KEY_KEYBOARD_DELETEFORWARD),   0 },
     { "#FT",    MJ_CMD_KEY, MJ_KC(HID_USAGE_KEY_KEYBOARD_TAB),   0 },
