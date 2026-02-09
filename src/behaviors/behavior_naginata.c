@@ -43,7 +43,7 @@ static inline abbreviation_result_t mejiro_command_abbreviation(const char *stro
     (void)stroke;
     return (abbreviation_result_t){ .success = false, .out = NULL };
 }
-static inline abbreviation_result_t mejiro_abstract_abbreviation(const char *stroke) { abbreviation_result_t r = {0}; r.success = false; r.out = NULL; return r; }
+static inline abbreviation_result_t mejiro_abstract_abbreviation(const char *stroke) { abbreviation_result_t r = {0}; r.success = false; r.output = NULL; return r; }
 static inline abbreviation_result_t mejiro_verb_transform(const char *stroke) {
     (void)stroke;
     return (abbreviation_result_t){ .success = false, .out = NULL };
@@ -63,7 +63,7 @@ static inline verb_result_t mejiro_verb_conjugate(const char *l_conso, const cha
     (void)verb; (void)verb_tail; (void)polite;
     verb_result_t r = {0};
     r.success = false;
-    r.out[0] = '\0';
+    r.output[0] = '\0';
     return r;
 }
 
@@ -1699,8 +1699,8 @@ mejiro_result_t_zmk mejiro_transform_zmk(const char *mejiro_id) {
         // ユーザー略語チェック（最優先、助詞込み）
         abbreviation_result_t user_abbr = mejiro_user_abbreviation(full_stroke);
         if (user_abbr.success) {
-            result.kana_length = utf8_char_count(user_abbr.out);
-            kana_to_roma_zmk(user_abbr.out, result.output, sizeof(result.output));
+            result.kana_length = utf8_char_count(user_abbr.output);
+            kana_to_roma_zmk(user_abbr.output, result.output, sizeof(result.output));
             result.success = true;
             return result;
         }
@@ -1710,7 +1710,7 @@ mejiro_result_t_zmk mejiro_transform_zmk(const char *mejiro_id) {
         if (abstract_abbr.success) {
             // 一般略語の出力に助詞を追加
             char kana_output[256] = {0};
-            strcpy(kana_output, abstract_abbr.out);
+            strcpy(kana_output, abstract_abbr.output);
             result.kana_length = utf8_char_count(kana_output);
             
             // 助詞がある場合は追加
@@ -1957,12 +1957,12 @@ static void send_mejiro_output(const char *mejiro_id) {
     mejiro_result_t_zmk r = mejiro_transform_zmk(mejiro_id);
 
     // 2) If transform fails, fall back to letters-only debug (so you still see the stroke)
-    if (!r.success || r.out[0] == '\0') {
+    if (!r.success || r.output[0] == '\0') {
         send_ascii_letters_only(mejiro_id);
         return;
     }
 
     // 3) Send romaji as key taps (letters only)
     // NOTE: If romaji contains non-letters (e.g., apostrophe), they will be skipped in this phase.
-    send_ascii_letters_only(r.out);
+    send_ascii_letters_only(r.output);
 }
