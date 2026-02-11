@@ -31,7 +31,7 @@
 
 
 // ---- Mejiro debug safe mode (0=normal,1=ASCII-only,2=no output but keep scanning) ----
-static unsigned char g_mejiro_safe_mode = 0;
+static unsigned char g_mejiro_safe_mode = 1;
 
 typedef struct {
     char output[512];
