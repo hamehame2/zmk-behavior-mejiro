@@ -31,7 +31,7 @@
 
 
 // ---- Mejiro debug safe mode (0=normal,1=ASCII-only output,2=do not send output,3=bypass naginata_press/release) ----
-static unsigned char g_mejiro_safe_mode = 0;
+static unsigned char g_mejiro_safe_mode = 2;
 
 /* Forward declarations (avoid implicit declarations which become build errors under -Werror). */
 static void mejiro_queue_send_ascii(const char *s);
