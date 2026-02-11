@@ -31,7 +31,7 @@
 
 
 // ---- Mejiro debug safe mode (0=normal,1=ASCII-only output,2=do not send output,3=bypass naginata_press/release) ----
-static unsigned char g_mejiro_safe_mode = 3;
+static unsigned char g_mejiro_safe_mode = 2;
 
 typedef struct {
     char output[256];
