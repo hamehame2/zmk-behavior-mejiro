@@ -1,16 +1,17 @@
+#include <zephyr/kernel.h>
 #include <zmk_naginata/nglist.h>
 
-// 集合を初期化する関数
-void initializeList(NGList *list) { list->size = 0; }
+void initList(NGList *list) {
+    list->size = 0;
+}
 
-// 要素を集合に追加する関数
 bool addToList(NGList *list, uint32_t element) {
-    if (list->size >= LIST_SIZE) {
+    if (list->size >= MAX_LIST_SIZE) {
         return false;
     }
 
-    // 集合に要素を追加
-    list->elements[list->size++] = element;
+    list->elements[list->size] = element;
+    list->size++;
     return true;
 }
 
@@ -18,76 +19,63 @@ bool addToListAt(NGList *list, uint32_t element, int idx) {
     if (idx < 0 || idx > list->size) {
         return false;
     }
-    if (list->size >= LIST_SIZE) {
+    if (list->size >= MAX_LIST_SIZE) {
         return false;
     }
-    /* Shift elements to the right to make room at idx.
-     * Must shift backwards to avoid overwriting.
-     */
+
+    /* shift right from tail to idx (backward) */
     for (int i = list->size; i > idx; i--) {
         list->elements[i] = list->elements[i - 1];
     }
+
     list->elements[idx] = element;
     list->size++;
     return true;
 }
 
-int includeList(NGList *list, uint32_t element) {
-    // 要素のインデックスを見つける
+uint32_t getFromList(NGList *list, int index) {
+    if (index < 0 || index >= list->size) {
+        return UINT32_MAX;
+    }
+    return list->elements[index];
+}
+
+int getIndexFromList(NGList *list, uint32_t element) {
     for (int i = 0; i < list->size; i++) {
         if (list->elements[i] == element) {
             return i;
-            break;
         }
     }
-
     return -1;
 }
 
-// 集合から要素を削除する関数
-bool removeFromList(NGList *list, uint32_t element) {
-    int foundIndex = includeList(list, element);
+bool isInList(NGList *list, uint32_t element) {
+    return getIndexFromList(list, element) != -1;
+}
 
-    if (foundIndex == -1) {
+bool removeFromList(NGList *list, uint32_t element) {
+    int index = getIndexFromList(list, element);
+    if (index == -1) {
         return false;
     }
 
-    // 要素を削除して集合を再構築
-    for (int i = foundIndex; i < list->size - 1; i++) {
+    for (int i = index; i < list->size - 1; i++) {
         list->elements[i] = list->elements[i + 1];
     }
+
     list->size--;
     return true;
 }
 
-void copyList(NGList *a, NGList *b) {
-    initializeList(b);
-    for (int i = 0; i < a->size; i++) {
-        addToList(b, a->elements[i]);
-    }
-}
-
-// 集合から要素を削除する関数
 bool removeFromListAt(NGList *list, int idx) {
-    // 要素を削除して集合を再構築
+    if (idx < 0 || idx >= list->size) {
+        return false;
+    }
+
     for (int i = idx; i < list->size - 1; i++) {
         list->elements[i] = list->elements[i + 1];
     }
+
     list->size--;
     return true;
-}
-
-bool compareList0(NGList *list, uint32_t a) {
-    if (list->elements[0] == a)
-        return true;
-    else
-        return false;
-}
-
-bool compareList01(NGList *list, uint32_t a, uint32_t b) {
-    if ((list->elements[0] == a && list->elements[1] == b) ||
-        (list->elements[0] == b && list->elements[1] == a))
-        return true;
-    else
-        return false;
 }
