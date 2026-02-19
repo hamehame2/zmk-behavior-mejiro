@@ -1,47 +1,81 @@
+#include <zephyr/kernel.h>
 #include <zmk_naginata/nglistarray.h>
 
-// 集合を初期化する関数
-void initializeListArray(NGListArray *list) { list->size = 0; }
+void initListArray(NGListArray *array) {
+    array->size = 0;
+}
 
-// 要素を集合に追加する関数
-bool addToListArray(NGListArray *list, NGList *element) {
-    if (list->size >= LIST_SIZE) {
+bool addToListArray(NGListArray *array, NGList list) {
+    if (array->size >= MAX_LIST_ARRAY_SIZE) {
         return false;
     }
 
-    // 集合に要素を追加
-    list->elements[list->size++] = *element;
+    array->lists[array->size] = list;
+    array->size++;
     return true;
 }
 
-bool addToListArrayAt(NGListArray *list, NGList *element, int idx) {
-    if (idx < 0 || idx > list->size) {
+bool addToListArrayAt(NGListArray *array, NGList list, int idx) {
+    if (idx < 0 || idx > array->size) {
         return false;
     }
-    if (list->size >= LIST_SIZE) {
+    if (array->size >= MAX_LIST_ARRAY_SIZE) {
         return false;
     }
-    /* Shift elements to the right to make room at idx.
-     * Must shift backwards to avoid overwriting.
-     */
-    for (int i = list->size; i > idx; i--) {
-        list->elements[i] = list->elements[i - 1];
+
+    /* shift right from tail to idx (backward) */
+    for (int i = array->size; i > idx; i--) {
+        array->lists[i] = array->lists[i - 1];
     }
-    list->elements[idx] = *element;
-    list->size++;
+
+    array->lists[idx] = list;
+    array->size++;
     return true;
 }
 
-// 集合から要素を削除する関数
-bool removeFromListArrayAt(NGListArray *list, int idx) {
-    // 要素を削除して集合を再構築
-    if (list->size > 0) {
-        for (int i = idx; i < list->size - 1; i++) {
-            list->elements[i] = list->elements[i + 1];
+NGList getFromListArray(NGListArray *array, int index) {
+    if (index < 0 || index >= array->size) {
+        NGList empty;
+        initList(&empty);
+        return empty;
+    }
+
+    return array->lists[index];
+}
+
+bool removeFromListArray(NGListArray *array, NGList list) {
+    for (int i = 0; i < array->size; i++) {
+        /* NOTE: This assumes NGList is comparable by size+elements.
+                 If NGList contains padding/garbage, you may need a custom equal(). */
+        if (array->lists[i].size == list.size) {
+            bool same = true;
+            for (int j = 0; j < list.size; j++) {
+                if (array->lists[i].elements[j] != list.elements[j]) {
+                    same = false;
+                    break;
+                }
+            }
+            if (same) {
+                for (int k = i; k < array->size - 1; k++) {
+                    array->lists[k] = array->lists[k + 1];
+                }
+                array->size--;
+                return true;
+            }
         }
-        list->size--;
-        return true;
-    } else {
+    }
+    return false;
+}
+
+bool removeFromListArrayAt(NGListArray *array, int idx) {
+    if (idx < 0 || idx >= array->size) {
         return false;
     }
+
+    for (int i = idx; i < array->size - 1; i++) {
+        array->lists[i] = array->lists[i + 1];
+    }
+
+    array->size--;
+    return true;
 }
