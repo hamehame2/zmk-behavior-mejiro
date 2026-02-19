@@ -1,0 +1,47 @@
+#include <zmk_naginata/nglistarray.h>
+
+// 集合を初期化する関数
+void initializeListArray(NGListArray *list) { list->size = 0; }
+
+// 要素を集合に追加する関数
+bool addToListArray(NGListArray *list, NGList *element) {
+    if (list->size >= LIST_SIZE) {
+        return false;
+    }
+
+    // 集合に要素を追加
+    list->elements[list->size++] = *element;
+    return true;
+}
+
+bool addToListArrayAt(NGListArray *list, NGList *element, int idx) {
+    if (idx < 0 || idx > list->size) {
+        return false;
+    }
+    if (list->size >= LIST_SIZE) {
+        return false;
+    }
+    /* Shift elements to the right to make room at idx.
+     * Must shift backwards to avoid overwriting.
+     */
+    for (int i = list->size; i > idx; i--) {
+        list->elements[i] = list->elements[i - 1];
+    }
+    list->elements[idx] = *element;
+    list->size++;
+    return true;
+}
+
+// 集合から要素を削除する関数
+bool removeFromListArrayAt(NGListArray *list, int idx) {
+    // 要素を削除して集合を再構築
+    if (list->size > 0) {
+        for (int i = idx; i < list->size - 1; i++) {
+            list->elements[i] = list->elements[i + 1];
+        }
+        list->size--;
+        return true;
+    } else {
+        return false;
+    }
+}
