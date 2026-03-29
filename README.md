@@ -46,7 +46,7 @@ https://note.com/jeebis_keyboard
 
 下記は2026/Mar/29　15時時点の現行のキーマップです。
 
-[https://pbs.twimg.com/media/G29AyECbwAIODD-?format=png&name=medium](https://pbs.twimg.com/media/HEjuU2ibcAAeF3a?format=png&name=large)
+https://pbs.twimg.com/media/G29AyECbwAIODD-?format=png&name=medium
 
 https://pbs.twimg.com/media/HEjukrsbEAAmpLA?format=png&name=large
 
