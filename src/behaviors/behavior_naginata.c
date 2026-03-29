@@ -1320,8 +1320,8 @@ static const mj_cmd_t mejiro_commands_zmk[] = {
     {"-nk",    MJ_CMD_STRING,   0, 0, 0, ","},
     {"n-nt",   MJ_CMD_STRING,   0, 0, 0, "?"},
     {"n-nk",   MJ_CMD_STRING,   0, 0, 0, "!"},
-    {"k-k",    MJ_CMD_STRING,   0, 0, 0, "na"},
-    {"k-nk",   MJ_CMD_STRING,   0, 0, 0, "na,"},
+   // {"k-k",    MJ_CMD_STRING,   0, 0, 0, "na"},
+   // {"k-nk",   MJ_CMD_STRING,   0, 0, 0, "na,"},
 };
 
 static bool handle_mejiro_command(const char *stroke) {
