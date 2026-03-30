@@ -1278,7 +1278,7 @@ static const mj_cmd_t mejiro_commands_zmk[] = {
     {"-ntk",   MJ_CMD_KEY,      MJ_KC(HID_USAGE_KEY_KEYBOARD_F7), 0, 0, NULL},
     {"n-ntk",  MJ_CMD_KEY,      MJ_KC(HID_USAGE_KEY_KEYBOARD_F8), 0, 0, NULL},
 
-    {"-YA",    MJ_CMD_STRING,   0, 0, 0, """},
+    {"-YA",    MJ_CMD_STRING,   0, 0, 0, "\""},
     {"-NI",    MJ_CMD_STRING,   0, 0, 0, "'"},
     {"-TK",    MJ_CMD_STRING,   0, 0, 0, "|"},
     {"-IA",    MJ_CMD_STRING,   0, 0, 0, ":"},
@@ -1298,7 +1298,7 @@ static const mj_cmd_t mejiro_commands_zmk[] = {
     {"-TKNY",  MJ_CMD_STRING,   0, 0, 0, ">"},
     {"-SNYIA", MJ_CMD_STRING,   0, 0, 0, "z<"},
     {"-STKNY", MJ_CMD_STRING,   0, 0, 0, "z>"},
-    {"-SYA",   MJ_CMD_STRING,   0, 0, 0, """{#Left}"},
+    {"-SYA",   MJ_CMD_STRING,   0, 0, 0, "\"\"{#Left}"},
     {"-SNI",   MJ_CMD_STRING,   0, 0, 0, "''{#Left}"},
     {"-TYI",   MJ_CMD_STRING,   0, 0, 0, "(){#Left}"},
     {"-STYI",  MJ_CMD_STRING,   0, 0, 0, "z(z){#Left}"},
