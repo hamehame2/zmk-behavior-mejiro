@@ -44,9 +44,9 @@ https://note.com/jeebis_keyboard
 
 筆者Twitterアカウント:herm@PTclown
 
-下記は2026/Mar/29　15時時点の現行のキーマップです。
+下記はキーマップ例です。基本的にはなんでもいいですのでntkとか打ちやすいところにおいてください。
 
-https://pbs.twimg.com/media/HElown9bEAAdHLu?format=png&name=medium
+https://pbs.twimg.com/media/HEqrSdGbsAAcdJF?format=png&name=large
 
 https://pbs.twimg.com/media/HEjukrsbEAAmpLA?format=png&name=large
 
