@@ -14,6 +14,10 @@ https://github.com/eswai/zmk-naginata
 
 https://github.com/JEEBIS27/Plover_Mejiro
 
+plover出ないものとしてAHK版を私が公開しましたが、NKROが必要なことに変わりはありません。また若干参照元にした版が古いままです。
+
+https://github.com/hamehame2/AHK_Mejiro
+
 またQMK版は取っ付きにくかったりMejiro31が人気で手にしづらいなどがあること、また無線では実現ができないことがありました。
 
 https://github.com/JEEBIS27/qmk_firmware/tree/master/keyboards/jeebis/mejiro31
