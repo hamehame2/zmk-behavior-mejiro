@@ -28,6 +28,10 @@ ZMKでの薙刀式実装はeswai氏が開発されており、こちらは改変
 
 この指定キー、及びレイヤーは後述のようにユーザーがキーマップ上で指定する必要があります。（何故かというとFG, JKの位置にしたくてもキーボードによってはこれらの位置が変わってしまう為位置と行き来したいレイヤー番号を教えて上げる必要がある為です。）
 
+zmkのエコシステムのため、プロジェクトurlや名前の入れ替えでキーマップはそのままでzmkメジロ式v2からzmk新下駄にそのまま変更できる互換性があります。
+
+ただしは薙刀式にする場合はng SQTをキーマップから削除するか、フォークした薙刀式にng SQT定義を追加してください。最初からng SQTを使用しなければ3つのプロジェクトは同じキーマップで互換性があります。
+
 ## IMEONにすると送信が変になる方向け
 
 　ローマ字のつづりとしてはIMEOFFでは送信が早くてもうまくいくのですが、IMEONの場合IME側の変換が追いつかなくて変な出力と見えることがあります。
@@ -44,7 +48,7 @@ https://note.com/jeebis_keyboard
 
 筆者Twitterアカウント:herm@PTclown
 
-下記はキーマップ例です。基本的にはなんでもいいですのでntkとか打ちやすいところにおいてください。
+下記はキーマップ例です。基本的にはなんでもいいですのでntkとか打ちやすいところにおいてください。ngキーは重複して配置や押しても問題はありません。
 
 https://pbs.twimg.com/media/HEqrSdGbsAAcdJF?format=png&name=large
 
@@ -169,9 +173,9 @@ cp build/zephyr/zmk.uf2 ~/zmk_right.uf2
 
 下記はZaruBall V3の場合です。具体例があった方初心者に参考になると思いますのでリンクになります。
 
-https://github.com/hamehame2/zmk-config-ZaruBall/blob/ZaruBall-v3xgeta/config/west.yml
+https://github.com/hamehame2/zmk-config-ZaruBall/blob/v3x260218/config/west.yml
 
-https://github.com/hamehame2/zmk-config-ZaruBall/blob/ZaruBall-v3xgeta/config/ZaruBall.keymap
+https://github.com/hamehame2/zmk-config-ZaruBall/blob/v3x260218/config/ZaruBall.keymap
 
 下記ではOSがJISでkot様のJISシフトも導入しているキーボードですがかっこ（）「」や記号の？！％～において問題がないかは今後検証してまいります。→問題なさそうです。
 
