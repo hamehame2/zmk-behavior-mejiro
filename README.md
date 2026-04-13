@@ -1,4 +1,4 @@
-# ZMK 薙刀式を改変したwinJIS向けメジロ式です。QMK版v2.6.1に寄せています。
+# ZMK winJIS向けメジロ式です。QMK版v2.6.2(走る追加)に寄せています。
 
 ZMK FirmwareでwinJIS向けメジロ式の入力を実現します。
 
